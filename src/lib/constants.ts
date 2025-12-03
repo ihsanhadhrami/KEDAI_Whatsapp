@@ -66,7 +66,7 @@ export const PRICING = [
     name: 'Percuma',
     price: 'RM 0',
     period: '/bulan',
-    description: 'Untuk bermula',
+    description: 'Untuk pemula',
     features: [
       { text: 'Sehingga 10 produk', included: true },
       { text: 'Templat asas', included: true },
@@ -79,7 +79,7 @@ export const PRICING = [
   },
   {
     name: 'Pro',
-    price: 'RM 49',
+    price: 'RM 59',
     period: '/bulan',
     description: 'Untuk perniagaan berkembang',
     features: [
