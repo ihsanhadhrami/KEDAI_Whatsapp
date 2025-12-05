@@ -14,7 +14,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2">
             <Store className="h-8 w-8 text-brand-400" />
-            <span className="text-xl font-bold bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-linear-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
               KEDAI
             </span>
           </a>

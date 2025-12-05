@@ -44,27 +44,57 @@ export const TEMPLATES = [
   {
     id: 1,
     name: 'Minimalis Moden',
-    image: 'https://placehold.co/600x400/1e1b4b/a78bfa?text=Minimalis',
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=400&fit=crop',
     category: 'Fesyen',
+    description: 'Sesuai untuk butik pakaian & aksesori',
+    color: 'pink',
   },
   {
     id: 2,
     name: 'Butik Elegan',
-    image: 'https://placehold.co/600x400/312e81/c4b5fd?text=Elegan',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&h=400&fit=crop',
     category: 'Kecantikan',
+    description: 'Ideal untuk produk skincare & kosmetik',
+    color: 'rose',
   },
   {
     id: 3,
     name: 'Kedai Segar',
-    image: 'https://placehold.co/600x400/3730a3/ddd6fe?text=Segar',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
     category: 'Makanan',
+    description: 'Perfect untuk restoran & F&B',
+    color: 'green',
+  },
+  {
+    id: 4,
+    name: 'Gadget Pro',
+    image: 'https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=600&h=400&fit=crop',
+    category: 'Teknologi',
+    description: 'Untuk kedai elektronik & gadget',
+    color: 'blue',
+  },
+  {
+    id: 5,
+    name: 'Home Decor',
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop',
+    category: 'Hiasan Rumah',
+    description: 'Sesuai untuk perabot & hiasan dalaman',
+    color: 'amber',
+  },
+  {
+    id: 6,
+    name: 'Sport Active',
+    image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&h=400&fit=crop',
+    category: 'Sukan',
+    description: 'Untuk alat sukan & activewear',
+    color: 'purple',
   },
 ];
 
 export const PRICING = [
   {
-    name: 'Percuma',
-    price: 'RM 0',
+    name: 'Beginner',
+    price: 'RM 19',
     period: '/bulan',
     description: 'Untuk pemula',
     features: [
@@ -93,8 +123,8 @@ export const PRICING = [
     highlight: true,
   },
   {
-    name: 'Enterpris',
-    price: 'RM 149',
+    name: 'Enterprise',
+    price: 'RM 99',
     period: '/bulan',
     description: 'Untuk perniagaan besar',
     features: [

@@ -7,7 +7,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="py-24 relative">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-brand-950/20 to-slate-950"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-brand-950/20 to-slate-950"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -27,7 +27,7 @@ export default function Pricing() {
               key={index}
               className={`relative rounded-2xl p-8 ${
                 plan.highlight
-                  ? 'bg-gradient-to-b from-brand-600/20 to-brand-950/20 border-2 border-brand-500 scale-105'
+                  ? 'bg-linear-to-b from-brand-600/20 to-brand-950/20 border-2 border-brand-500 scale-105'
                   : 'glass-card'
               }`}
             >
@@ -55,9 +55,9 @@ export default function Pricing() {
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center">
                     {feature.included ? (
-                      <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                      <Check className="h-5 w-5 text-green-400 mr-3 shrink-0" />
                     ) : (
-                      <X className="h-5 w-5 text-slate-600 mr-3 flex-shrink-0" />
+                      <X className="h-5 w-5 text-slate-600 mr-3 shrink-0" />
                     )}
                     <span className={feature.included ? 'text-slate-300' : 'text-slate-500'}>
                       {feature.text}

@@ -1,12 +1,66 @@
 'use client';
 
-import { ArrowRight, Play, MessageCircle, ShoppingBag } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Play, MessageCircle, ShoppingBag, Heart, Plus, Minus, X, ChevronLeft } from 'lucide-react';
+
+// Product data
+const products = [
+  {
+    id: 1,
+    name: 'Baju Kurung Moden',
+    price: 89.00,
+    image: '/baju-kurung.jpg',
+    gradient: 'from-brand-600/40 to-brand-800/40',
+    description: 'Baju kurung moden dengan rekaan eksklusif. Sesuai untuk majlis formal dan kasual.',
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: ['Biru', 'Merah', 'Hijau'],
+  },
+  {
+    id: 2,
+    name: 'Handbag Premium',
+    price: 159.00,
+    image: '/handbag.jpg',
+    gradient: 'from-pink-600/40 to-pink-800/40',
+    description: 'Handbag premium berkualiti tinggi. Material kulit PU tahan lama.',
+    sizes: ['Standard'],
+    colors: ['Hitam', 'Coklat', 'Cream'],
+  },
+];
 
 export default function Hero() {
+  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const [liked, setLiked] = useState<number[]>([]);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState<{product: typeof products[0], qty: number, size: string, color: string}[]>([]);
+
+  const toggleLike = (id: number) => {
+    setLiked(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  };
+
+  const addToCart = () => {
+    if (selectedProduct && selectedSize && selectedColor) {
+      setCartItems(prev => [...prev, { product: selectedProduct, qty: quantity, size: selectedSize, color: selectedColor }]);
+      setSelectedProduct(null);
+      setQuantity(1);
+      setSelectedSize('');
+      setSelectedColor('');
+    }
+  };
+
+  const [whatsappClicked, setWhatsappClicked] = useState(false);
+
+  const handleWhatsAppClick = () => {
+    setWhatsappClicked(true);
+    setTimeout(() => setWhatsappClicked(false), 200);
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-950/50 via-slate-950 to-slate-950"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-brand-950/50 via-slate-950 to-slate-950"></div>
       
       {/* Animated Background Elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-brand-600/20 rounded-full blur-3xl animate-pulse-slow"></div>
@@ -26,7 +80,7 @@ export default function Hero() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <span className="text-white">Bina Kedai Online</span>
               <br />
-              <span className="bg-gradient-to-r from-brand-400 via-brand-500 to-brand-600 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-brand-400 via-brand-500 to-brand-600 bg-clip-text text-transparent">
                 Tanpa Kod
               </span>
             </h1>
@@ -76,43 +130,187 @@ export default function Hero() {
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-6 bg-slate-900 rounded-b-2xl z-10"></div>
                 
                 {/* Phone Screen Content */}
-                <div className="h-full bg-gradient-to-b from-slate-800 to-slate-900 p-3 pt-8">
-                  {/* Store Header */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center">
-                      <ShoppingBag className="h-4 w-4 text-white" />
+                <div className="h-full bg-linear-to-b from-slate-800 to-slate-900 p-3 pt-8 overflow-hidden relative">
+                  {/* Main Store View */}
+                  <div className={`transition-transform duration-300 ${selectedProduct ? '-translate-x-full' : 'translate-x-0'}`}>
+                    {/* Store Header */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center">
+                          <ShoppingBag className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <div className="text-white font-semibold text-xs">Butik Seri Ayu</div>
+                          <div className="text-slate-400 text-[10px]">Online Store</div>
+                        </div>
+                      </div>
+                      <button 
+                        onClick={() => setShowCart(!showCart)}
+                        className="relative p-1.5 bg-slate-700/50 rounded-full active:scale-95 transition-transform"
+                      >
+                        <ShoppingBag className="h-4 w-4 text-white" />
+                        {cartItems.length > 0 && (
+                          <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-500 rounded-full text-[8px] text-white flex items-center justify-center">
+                            {cartItems.length}
+                          </span>
+                        )}
+                      </button>
                     </div>
-                    <div>
-                      <div className="text-white font-semibold text-xs">Butik Seri Ayu</div>
-                      <div className="text-slate-400 text-[10px]">Online Store</div>
+
+                    {/* Cart Dropdown */}
+                    {showCart && cartItems.length > 0 && (
+                      <div className="absolute top-16 left-3 right-3 bg-slate-800 rounded-xl p-2 z-20 border border-slate-700 shadow-xl">
+                        <div className="text-white text-xs font-semibold mb-2">Troli Saya</div>
+                        {cartItems.map((item, idx) => (
+                          <div key={idx} className="flex justify-between items-center text-[10px] text-slate-300 py-1 border-b border-slate-700/50">
+                            <span>{item.product.name} x{item.qty}</span>
+                            <span className="text-brand-400">RM {(item.product.price * item.qty).toFixed(2)}</span>
+                          </div>
+                        ))}
+                        <div className="text-right text-xs text-white font-bold mt-2">
+                          Jumlah: RM {cartItems.reduce((sum, item) => sum + item.product.price * item.qty, 0).toFixed(2)}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Product Cards */}
+                    <div className="space-y-2">
+                      {products.map((product) => (
+                        <div 
+                          key={product.id}
+                          onClick={() => { setSelectedProduct(product); setShowCart(false); }}
+                          className="bg-slate-800/80 rounded-xl p-2 border border-slate-700/50 cursor-pointer active:scale-[0.98] transition-all hover:border-brand-500/50"
+                        >
+                          <div className="relative">
+                            <div className="w-full h-20 rounded-lg mb-2 overflow-hidden">
+                              <img 
+                                src={product.image} 
+                                alt={product.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); toggleLike(product.id); }}
+                              className="absolute top-1 right-1 p-1 bg-slate-900/60 rounded-full active:scale-90 transition-transform"
+                            >
+                              <Heart 
+                                className={`h-3 w-3 transition-colors ${liked.includes(product.id) ? 'text-red-500 fill-red-500' : 'text-white'}`} 
+                              />
+                            </button>
+                          </div>
+                          <div className="text-white text-xs font-medium">{product.name}</div>
+                          <div className="text-brand-400 text-xs font-bold">RM {product.price.toFixed(2)}</div>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Product Cards */}
-                  <div className="space-y-2">
-                    <div className="bg-slate-800/80 rounded-xl p-2 border border-slate-700/50">
-                      <div className="w-full h-20 bg-gradient-to-br from-brand-600/40 to-brand-800/40 rounded-lg mb-2 flex items-center justify-center">
-                        <span className="text-2xl">👗</span>
-                      </div>
-                      <div className="text-white text-xs font-medium">Baju Kurung Moden</div>
-                      <div className="text-brand-400 text-xs font-bold">RM 89.00</div>
-                    </div>
-                    
-                    <div className="bg-slate-800/80 rounded-xl p-2 border border-slate-700/50">
-                      <div className="w-full h-20 bg-gradient-to-br from-pink-600/40 to-pink-800/40 rounded-lg mb-2 flex items-center justify-center">
-                        <span className="text-2xl">👜</span>
-                      </div>
-                      <div className="text-white text-xs font-medium">Handbag Premium</div>
-                      <div className="text-brand-400 text-xs font-bold">RM 159.00</div>
-                    </div>
+                  {/* Product Detail View */}
+                  <div className={`absolute inset-0 bg-linear-to-b from-slate-800 to-slate-900 p-3 pt-8 transition-transform duration-300 ${selectedProduct ? 'translate-x-0' : 'translate-x-full'}`}>
+                    {selectedProduct && (
+                      <>
+                        {/* Back Button */}
+                        <button 
+                          onClick={() => { setSelectedProduct(null); setQuantity(1); setSelectedSize(''); setSelectedColor(''); }}
+                          className="flex items-center gap-1 text-slate-400 text-xs mb-3 active:text-white transition-colors"
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                          Kembali
+                        </button>
+
+                        {/* Product Image */}
+                        <div className="w-full h-28 rounded-xl mb-3 overflow-hidden relative">
+                          <img 
+                            src={selectedProduct.image} 
+                            alt={selectedProduct.name}
+                            className="w-full h-full object-cover"
+                          />
+                          <button 
+                            onClick={() => toggleLike(selectedProduct.id)}
+                            className="absolute top-2 right-2 p-1.5 bg-slate-900/60 rounded-full active:scale-90 transition-transform"
+                          >
+                            <Heart className={`h-4 w-4 transition-colors ${liked.includes(selectedProduct.id) ? 'text-red-500 fill-red-500' : 'text-white'}`} />
+                          </button>
+                        </div>
+
+                        {/* Product Info */}
+                        <div className="text-white text-sm font-semibold">{selectedProduct.name}</div>
+                        <div className="text-brand-400 text-sm font-bold mb-2">RM {selectedProduct.price.toFixed(2)}</div>
+                        <p className="text-slate-400 text-[10px] mb-3 leading-relaxed">{selectedProduct.description}</p>
+
+                        {/* Size Selection */}
+                        <div className="mb-2">
+                          <div className="text-slate-300 text-[10px] mb-1">Saiz:</div>
+                          <div className="flex gap-1 flex-wrap">
+                            {selectedProduct.sizes.map(size => (
+                              <button 
+                                key={size}
+                                onClick={() => setSelectedSize(size)}
+                                className={`px-2 py-1 rounded text-[10px] transition-all active:scale-95 ${selectedSize === size ? 'bg-brand-500 text-white' : 'bg-slate-700 text-slate-300'}`}
+                              >
+                                {size}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Color Selection */}
+                        <div className="mb-3">
+                          <div className="text-slate-300 text-[10px] mb-1">Warna:</div>
+                          <div className="flex gap-1 flex-wrap">
+                            {selectedProduct.colors.map(color => (
+                              <button 
+                                key={color}
+                                onClick={() => setSelectedColor(color)}
+                                className={`px-2 py-1 rounded text-[10px] transition-all active:scale-95 ${selectedColor === color ? 'bg-brand-500 text-white' : 'bg-slate-700 text-slate-300'}`}
+                              >
+                                {color}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Quantity */}
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-slate-300 text-[10px]">Kuantiti:</span>
+                          <div className="flex items-center gap-2">
+                            <button 
+                              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                              className="w-6 h-6 bg-slate-700 rounded flex items-center justify-center active:scale-90 transition-transform"
+                            >
+                              <Minus className="h-3 w-3 text-white" />
+                            </button>
+                            <span className="text-white text-xs w-6 text-center">{quantity}</span>
+                            <button 
+                              onClick={() => setQuantity(quantity + 1)}
+                              className="w-6 h-6 bg-slate-700 rounded flex items-center justify-center active:scale-90 transition-transform"
+                            >
+                              <Plus className="h-3 w-3 text-white" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Add to Cart Button */}
+                        <button 
+                          onClick={addToCart}
+                          disabled={!selectedSize || !selectedColor}
+                          className={`w-full py-2 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] ${selectedSize && selectedColor ? 'bg-brand-500 text-white' : 'bg-slate-700 text-slate-500 cursor-not-allowed'}`}
+                        >
+                          Tambah ke Troli - RM {(selectedProduct.price * quantity).toFixed(2)}
+                        </button>
+                      </>
+                    )}
                   </div>
 
                   {/* WhatsApp Button */}
                   <div className="absolute bottom-4 left-3 right-3">
-                    <div className="bg-green-500 text-white rounded-full py-2.5 px-3 flex items-center justify-center gap-2 font-medium text-xs">
+                    <button 
+                      onClick={handleWhatsAppClick}
+                      className={`w-full bg-green-500 text-white rounded-full py-2.5 px-3 flex items-center justify-center gap-2 font-medium text-xs transition-all shadow-lg shadow-green-500/30 ${whatsappClicked ? 'scale-95 bg-green-600' : 'active:scale-[0.98] hover:bg-green-600'}`}
+                    >
                       <MessageCircle className="h-3.5 w-3.5" />
                       Order via WhatsApp
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
