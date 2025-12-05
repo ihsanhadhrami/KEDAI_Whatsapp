@@ -9,11 +9,11 @@ export default function Footer() {
   return (
     <footer className="relative pt-24 pb-8">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-slate-950"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-slate-900 to-slate-950"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* CTA Section */}
-        <div className="glass-card rounded-3xl p-8 md:p-12 text-center mb-16 bg-gradient-to-r from-brand-900/30 to-brand-950/30">
+        <div className="glass-card rounded-3xl p-8 md:p-12 text-center mb-16 bg-linear-to-r from-brand-900/30 to-brand-950/30">
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
             Sedia untuk Memulakan?
           </h3>
@@ -31,7 +31,7 @@ export default function Footer() {
           <div className="md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <Store className="h-8 w-8 text-brand-400" />
-              <span className="text-xl font-bold bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-linear-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
                 KEDAI
               </span>
             </div>
@@ -92,7 +92,7 @@ export default function Footer() {
                 +60 12-345 6789
               </li>
               <li className="flex items-start text-slate-400 text-sm">
-                <MapPin className="h-4 w-4 mr-2 mt-0.5 text-brand-400 flex-shrink-0" />
+                <MapPin className="h-4 w-4 mr-2 mt-0.5 text-brand-400 shrink-0" />
                 Kuala Lumpur, Malaysia
               </li>
             </ul>

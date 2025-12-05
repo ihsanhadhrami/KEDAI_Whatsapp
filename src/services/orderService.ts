@@ -9,11 +9,12 @@ import { sanitizePhoneNumber } from '@/utils/validate';
 import type { Order, CreateOrderInput, OrderStatus, PlanType } from '@/models/order';
 import type { CreateStoreInput } from '@/models/store';
 
-// Pricing configuration
+// Pricing configuration - KEEP IN SYNC WITH constants.ts
+// Beginner = RM19, Pro = RM59, Enterprise = RM99
 const PRICING: Record<PlanType, number> = {
-  free: 0,
+  free: 19,    // Beginner plan
   pro: 59,
-  enterprise: 149,
+  enterprise: 99,
 };
 
 class OrderService {

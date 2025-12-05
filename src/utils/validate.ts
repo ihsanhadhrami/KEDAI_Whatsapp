@@ -38,17 +38,17 @@ export const productSchema = z.object({
 export function validateInput<T>(schema: z.ZodSchema<T>, data: unknown): { 
   success: boolean; 
   data?: T; 
-  errors?: z.ZodError['errors'];
+  errors?: z.ZodIssue[];
 } {
   const result = schema.safeParse(data);
   if (result.success) {
     return { success: true, data: result.data };
   }
-  return { success: false, errors: result.error.errors };
+  return { success: false, errors: result.error.issues };
 }
 
 // Format validation errors for API response
-export function formatValidationErrors(errors: z.ZodError['errors']): Record<string, string> {
+export function formatValidationErrors(errors: z.ZodIssue[]): Record<string, string> {
   const formatted: Record<string, string> = {};
   for (const error of errors) {
     const path = error.path.join('.');

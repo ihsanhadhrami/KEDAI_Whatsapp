@@ -10,6 +10,7 @@ interface EmailOptions {
 
 interface OrderConfirmationData {
   customerName: string;
+  customerEmail: string;
   orderNumber: string;
   storeName: string;
   storeUrl: string;
